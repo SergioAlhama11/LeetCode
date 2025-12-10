@@ -1,4 +1,4 @@
-package com.sergio.leetCode.Udemy.ArraysStringsHashTables._01_is_unique;
+package com.sergio.Udemy.ArraysStringsHashTables._01_is_unique;
 
 
 import java.util.HashSet;
