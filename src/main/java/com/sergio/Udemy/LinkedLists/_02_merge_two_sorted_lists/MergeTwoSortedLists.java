@@ -26,7 +26,7 @@ public class MergeTwoSortedLists {
             current = current.next;
         }
 
-        if (list1 != null) {
+        if (list1 == null) {
             appendList(current, list2);
         } else {
             appendList(current, list1);
