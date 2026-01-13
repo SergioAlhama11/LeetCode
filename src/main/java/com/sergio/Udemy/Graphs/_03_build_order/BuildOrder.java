@@ -1,5 +1,12 @@
 package com.sergio.Udemy.Graphs._03_build_order;
 
+import com.sergio.Udemy.Graphs._00_graph_search.DepthFirstSearch;
+import com.sergio.Udemy.Graphs._00_graph_search.Graph;
+import com.sergio.Udemy.Graphs._00_graph_search.GraphNode;
+import com.sergio.Udemy.Graphs._00_graph_search.GraphNodeStatus;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /*
@@ -25,6 +32,45 @@ import java.util.List;
 public class BuildOrder {
 
   public List<String> buildOrder(String[] projects, String[][] dependencies) {
-    throw new UnsupportedOperationException("Not implemented yet");
+    Graph graph = buildDependencyGraph(projects, dependencies);
+
+    List<String> sortedProjects = new ArrayList<>();
+    for (GraphNode node : graph.nodes.values()) {
+      depthFirstSearch(node, sortedProjects);
+    }
+
+    Collections.reverse(sortedProjects);
+    return sortedProjects;
+  }
+
+  private void depthFirstSearch(GraphNode node, List<String> sortedProjects) {
+    if (node == null) return;
+
+    if (node.status == GraphNodeStatus.Unvisited) {
+      node.status = GraphNodeStatus.Visiting;
+
+      for (GraphNode n : node.adjacents.values()) {
+        depthFirstSearch(n, sortedProjects);
+      }
+
+      node.status = GraphNodeStatus.Visited;
+      sortedProjects.add(node.value);
+    } else if (node.status == GraphNodeStatus.Visiting) {
+      throw new RuntimeException();
+    }
+  }
+
+  private Graph buildDependencyGraph(String[] projects, String[][] dependencies) {
+    Graph graph = new Graph();
+
+    for (String project : projects) {
+      graph.getOrCreateNode(project);
+    }
+
+    for (String[] dependency : dependencies) {
+      graph.addEdge(dependency[0], dependency[1]);
+    }
+
+    return graph;
   }
 }
