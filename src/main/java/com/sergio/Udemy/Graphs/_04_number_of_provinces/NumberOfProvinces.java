@@ -1,5 +1,7 @@
 package com.sergio.Udemy.Graphs._04_number_of_provinces;
 
+import com.sergio.Udemy.Graphs._00_graph_search.GraphNode;
+
 /*
  * Tenemos N ciudades y queremos calcular el número de provincias existentes.
  * Una provincia la forman todas las ciudades que están conectadas entre sí.
@@ -17,6 +19,24 @@ package com.sergio.Udemy.Graphs._04_number_of_provinces;
 public class NumberOfProvinces {
 
   public int numberOfProvinces(int[][] isConnected) {
-    throw new UnsupportedOperationException("Not implemented yet");
+    boolean[] visited = new boolean[isConnected.length];
+    int count = 0;
+
+    for (int i = 0; i < isConnected.length; i++) {
+      if (!visited[i]) {
+        count++;
+        dfs(isConnected, visited, i);
+      }
+    }
+    return count;
+  }
+
+  private void dfs(int[][] isConnected, boolean[] visited, int city) {
+    for (int other = 0; other < isConnected.length; other++) {
+      if (other != city && isConnected[city][other] == 1 && !visited[other]) {
+        visited[other] = true;
+        dfs(isConnected, visited, other);
+      }
+    }
   }
 }
