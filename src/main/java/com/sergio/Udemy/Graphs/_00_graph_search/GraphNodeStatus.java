@@ -1,3 +1,5 @@
 package com.sergio.Udemy.Graphs._00_graph_search;
 
-public enum GraphNodeStatus {}
+public enum GraphNodeStatus {
+    Unvisited, Visited, Visiting
+}
