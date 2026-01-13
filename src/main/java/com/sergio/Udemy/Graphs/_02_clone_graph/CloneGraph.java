@@ -1,5 +1,7 @@
 package com.sergio.Udemy.Graphs._02_clone_graph;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /*
@@ -18,6 +20,23 @@ public class CloneGraph {
   }
 
   public Node cloneGraph(Node node) {
-    throw new UnsupportedOperationException("Not implemented yet");
+    HashMap<Integer, Node> map = new HashMap<>();
+    return cloneNode(node, map);
+  }
+
+  private Node cloneNode(Node node, HashMap<Integer, Node> map) {
+    if (node == null) return null;
+
+    if (map.containsKey(node.val)) return map.get(node.val);
+
+    Node newNode = new Node();
+    newNode.val = node.val;
+    newNode.neighbors = new ArrayList<>();
+
+    map.put(newNode.val, newNode);
+
+    for (Node neighbor : node.neighbors) newNode.neighbors.add(cloneNode(neighbor, map));
+
+    return newNode;
   }
 }
