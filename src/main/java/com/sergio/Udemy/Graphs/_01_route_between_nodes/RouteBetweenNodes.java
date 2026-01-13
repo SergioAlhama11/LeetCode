@@ -2,6 +2,10 @@ package com.sergio.Udemy.Graphs._01_route_between_nodes;
 
 import com.sergio.Udemy.Graphs._00_graph_search.Graph;
 import com.sergio.Udemy.Graphs._00_graph_search.GraphNode;
+import com.sergio.Udemy.Graphs._00_graph_search.GraphNodeStatus;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 /*
  * Dado un grafo dirigido y dos nodos, determina si hay un camino start-end
@@ -24,6 +28,23 @@ import com.sergio.Udemy.Graphs._00_graph_search.GraphNode;
 public class RouteBetweenNodes {
 
   public boolean isRouteBetween(Graph g, GraphNode start, GraphNode end) {
-    throw new UnsupportedOperationException("Not implemented yet");
+    if (start == end) return true;
+
+    Queue<GraphNode> queue = new LinkedList<>();
+    queue.add(start);
+
+    while (!queue.isEmpty()) {
+      GraphNode next = queue.remove();
+
+      if (end == next) return true;
+
+      for (GraphNode n : next.adjacents.values()) {
+        if (!n.status.equals(GraphNodeStatus.Visited)) {
+          queue.add(n);
+          n.status = GraphNodeStatus.Visited;
+        }
+      }
+    }
+    return false;
   }
 }
