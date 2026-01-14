@@ -18,35 +18,38 @@ import java.util.PriorityQueue;
  *  Output: ["Gold Medal","5","Bronze Medal","Silver Medal","4"]
  */
 public class RelativeRanks {
-    public String[] findRelativeRanks(int[] score) {
-        int numberOfPlayers = score.length;
-        String[] result = new String[numberOfPlayers];
 
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> score[b] - score[a]);
+  public String[] findRelativeRanks(int[] score) {
+    int numberOfPlayers = score.length;
+    String[] res = new String[numberOfPlayers];
 
-        for (int i = 0; i < numberOfPlayers; i++) {
-            maxHeap.add(i);
-        }
+    PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> score[b] - score[a]);
 
-        int position = 1;
-        while (!maxHeap.isEmpty()) {
-            int playerIndex = maxHeap.poll();
-
-            switch (position) {
-                case 1:
-                    result[playerIndex] = "Gold Medal";
-                    break;
-                case 2:
-                    result[playerIndex] = "Silver Medal";
-                    break;
-                case 3:
-                    result[playerIndex] = "Bronze Medal";
-                    break;
-                default:
-                    result[playerIndex] = Integer.toString(position);
-            }
-            position++;
-        }
-        return result;
+    for (int i = 0; i < numberOfPlayers; i++) {
+      pq.add(i);
     }
+
+    int position = 1;
+    while (!pq.isEmpty()) {
+      int playerIndex = pq.poll();
+
+      switch (position) {
+        case 1:
+          res[playerIndex] = "Gold Medal";
+          break;
+        case 2:
+          res[playerIndex] = "Silver Medal";
+          break;
+        case 3:
+          res[playerIndex] = "Bronze Medal";
+          break;
+        default:
+          res[playerIndex] = Integer.toString(position);
+      }
+
+      position++;
+    }
+
+    return res;
+  }
 }
